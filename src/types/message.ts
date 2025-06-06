@@ -4,15 +4,25 @@ export interface ChatMessage {
   text: string
 }
 
-export const encode = (m: ChatMessage): Uint8Array => {
+
+const enc = new TextEncoder()
+const dec = new TextDecoder()
+
+export function encode(m: Partial<ChatMessage>): Uint8Array {
   const msg: ChatMessage = {
     ts: m.ts ?? Date.now(),
-    author: m.author,
-    text: m.text,
+    author: m.author ?? '',
+    text: m.text ?? ''
   }
-  return new TextEncoder().encode(JSON.stringify(msg))
+  return enc.encode(JSON.stringify(msg))
 }
 
-export const decode = (u: Uint8Array): ChatMessage => {
-  return JSON.parse(new TextDecoder().decode(u)) as ChatMessage
+export function decode(u: Uint8Array): ChatMessage {
+  const obj = JSON.parse(dec.decode(u))
+  return {
+    ts: obj.ts ?? Date.now(),
+    author: obj.author,
+    text: obj.text
+  }
+main
 }
