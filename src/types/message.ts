@@ -4,6 +4,7 @@ export interface ChatMessage {
   text: string
 }
 
+
 const enc = new TextEncoder()
 const dec = new TextDecoder()
 
@@ -23,4 +24,5 @@ export function decode(u: Uint8Array): ChatMessage {
     author: obj.author,
     text: obj.text
   }
+main
 }

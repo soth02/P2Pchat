@@ -2,7 +2,8 @@ import sodium from 'libsodium-wrappers'
 
 await sodium.ready
 
-export function seal(plain: Uint8Array, key: Uint8Array) {
+export function seal(plain: Uint8Array, key: Uint8Array): { nonce: Uint8Array; boxed: Uint8Array } {
+main
   const nonce = sodium.randombytes_buf(sodium.crypto_secretbox_NONCEBYTES)
   const boxed = sodium.crypto_secretbox_easy(plain, nonce, key)
   return { nonce, boxed }
